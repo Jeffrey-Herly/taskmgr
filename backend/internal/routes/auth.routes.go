@@ -10,4 +10,5 @@ import (
 func RegisterAuthRoutes(router *gin.Engine, appHandler *handler.AppHandler) {
 	api := router.Group("/api")
 	api.POST("/login", appHandler.Auth.Login)
+	api.POST("/register", appHandler.Auth.Register)
 }

@@ -8,5 +8,6 @@ import (
 
 func RegisterRoutes(router *gin.Engine, appHandler *handler.AppHandler) {
 	RegisterAuthRoutes(router, appHandler)
+	RegisterHealthRoutes(router, appHandler)
 	RegisterViewRoutes(router, appHandler)
 }

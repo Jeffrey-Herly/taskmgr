@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -29,6 +30,13 @@ func RegisterViewRoutes(router *gin.Engine, _ *handler.AppHandler) {
 	dist := frontendDist()
 	index := filepath.Join(dist, "index.html")
 
+	if abs, err := filepath.Abs(dist); err == nil {
+		log.Printf("      [OK] SPA dir: %s", abs)
+	}
+	if _, err := os.Stat(index); err != nil {
+		log.Printf("      [WARN] %s tidak ditemukan, halaman akan 404. Jalankan `npm.cmd run build` di frontend/", index)
+	}
+
 	router.Static("/assets", filepath.Join(dist, "assets"))
 	router.StaticFile("/favicon.ico", filepath.Join(dist, "favicon.ico"))
 
@@ -38,6 +46,7 @@ func RegisterViewRoutes(router *gin.Engine, _ *handler.AppHandler) {
 
 	router.GET("/", serveSPA)
 	router.GET("/login", serveSPA)
+	router.GET("/register", serveSPA)
 	router.GET("/dashboard", serveSPA)
 	router.GET("/products/:id", serveSPA)
 

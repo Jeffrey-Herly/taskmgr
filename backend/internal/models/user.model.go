@@ -10,13 +10,16 @@ const (
 )
 
 type User struct {
-	ID           string    `db:"id"            json:"id"`
-	Username     string    `db:"username"      json:"username"`
-	Email        string    `db:"email"         json:"email"`
-	PasswordHash string    `db:"password_hash" json:"-"`
-	Role         UserRole  `db:"role"          json:"role"`
-	CreatedAt    time.Time `db:"created_at"    json:"created_at"`
+	ID           string    `db:"id"            json:"id" gorm:"type:uuid;primaryKey;default:gen_random_uuid()"`
+	Username     string    `db:"username"      json:"username" gorm:"size:50;uniqueIndex;not null"`
+	Email        string    `db:"email"         json:"email" gorm:"size:255;uniqueIndex;not null"`
+	PasswordHash string    `db:"password_hash" json:"-" gorm:"column:password_hash;not null"`
+	Role         UserRole  `db:"role"          json:"role" gorm:"size:20;not null;default:user"`
+	CreatedAt    time.Time `db:"created_at"    json:"created_at" gorm:"autoCreateTime"`
 }
+
+// TableName menetapkan nama tabel eksplisit untuk AutoMigrate.
+func (User) TableName() string { return "users" }
 
 // DTO
 
