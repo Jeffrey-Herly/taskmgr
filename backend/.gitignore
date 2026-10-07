@@ -1,0 +1,22 @@
+# Environment variables (do not commit secrets)
+.env
+
+# Binaries and executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test and coverage artifacts
+*.test
+*.out
+
+# Go workspace
+go.work
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
